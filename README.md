@@ -21,53 +21,67 @@
 2. Написать SQL-запросы, создающие спроектированную БД. Прислать ссылку на файл, содержащий SQL-запросы.
 
 ## Решение
-![Схема](/images/Снимок%20экрана%202024-09-23%20153130.png)
+![Схема](/images/image.png)
 ```
 CREATE TABLE Genres
 (
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+    'id' SERIAL INTEGER PRIMARY KEY,
     'genre_name' VARCHAR(60) NOT NULL
 );
 
 
 CREATE TABLE Bands
 (
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+    'id' SERIAL INTEGER PRIMARY KEY,
     'band_name' VARCHAR(60) NOT NULL
 );
 
 
 CREATE TABLE Albums
 (
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+    'id' SERIAL INTEGER PRIMARY KEY,
     'album_name' VARCHAR(60) NOT NULL,
-    'release_year' INTEGER NOT NULL
-);
-
-
-CREATE TABLE Collection
-(
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
-    'collection_name' VARCHAR(60) NOT NULL,
     'release_year' INTEGER NOT NULL
 );
 
 
 CREATE TABLE Songs
 (
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
+    'id' SERIAL INTEGER PRIMARY KEY,
     'song_name' VARCHAR(60) NOT NULL,
-    'timing' TIME NOT NULL
+    'timing' INTEGER NOT NULL
+    'id_album' INTEGER PEFERENCE Albums(id)
 );
 
 
-CREATE TABLE Union_table
+CREATE TABLE Collections
 (
-    'id' INTEGER PRIMARY KEY AUTO_INCREMENT,
-    'id_genre' INTEGER REFERENCE Genres(id),
-    'id_band' INTENGER REFERENCE Bands(id),
-    'id_album' INTENGER REFERENCE Albums(id),
-    'id_collection' INTENGER REFERENCE Collection(id),
-    'id_song' INTENGER REFERENCE Songs(id)
+    'id' SERIAL INTEGER PRIMARY KEY,
+    'collection_name' VARCHAR(60) NOT NULL,
+    'release_year' INTEGER NOT NULL
+);
+
+
+CREATE TABLE Genres_and_bands
+(
+    'id' SERIAL INTEGER PRIMARY KEY,
+    'id_genre' INTEGER PEFERENCE Genres(id),
+    'id_band' INTEGER PEFERENCE Bands(id)
+);
+
+
+CREATE TABLE Albums_and_bands
+(
+    'id' SERIAL INTEGER PRIMARY KEY,
+    'id_band' INTEGER PEFERENCE Bands(id),
+    'id_album' INTEGER PEFERENCE Albums(id)
+);
+
+
+CREATE TABLE Collections_and_songs
+(
+    'id' SERIAL INTEGER PRIMARY KEY,
+    'id_song' INTEGER PEFERENCE Songs(id),
+    'id_collection' INTEGER PEFERENCE Collections(id)
 );
 ```
